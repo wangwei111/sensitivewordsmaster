@@ -1,5 +1,5 @@
 server:
-    port:  8302
+    port:  8303
 spring:
     application:
         name: manage-system
@@ -20,7 +20,7 @@ login:
 ## logging config
 logging:
   level:
-    ROOT: debug
+    ROOT: INFO
     org.springfromework.web: INFO
     com.wwmust: debug
     org.hibernate: ERROR
