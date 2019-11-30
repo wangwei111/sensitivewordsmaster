@@ -50,7 +50,7 @@ public class SetSensitiveWordScheduleTask {
     private  ApplicationContext context;
 
         //3.添加定时任务
-        @Scheduled(cron = "0/5 * * * * ?")
+      //  @Scheduled(cron = "0/5 * * * * ?")
         //或直接指定时间间隔，例如：5秒
          public  SensitiveFilter setSensitiveWords() {
             SensitiveFilter sensitiveFilter = new SensitiveFilter();

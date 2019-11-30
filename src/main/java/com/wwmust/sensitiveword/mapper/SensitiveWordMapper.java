@@ -10,6 +10,7 @@ package com.wwmust.sensitiveword.mapper;
 
 import com.model.filterWd;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
@@ -22,10 +23,11 @@ import java.util.List;
  * @date 11/30/2019 11:46
  */
 @Repository
+@CacheConfig
 public  interface SensitiveWordMapper {
 
 
     @Select("select id ,keywords,type from filter_wd")
-   // @Cacheable(value = "sensitive_word_cache")
+    @Cacheable(value = "sensitive_word_cache")
     List<filterWd> getSensitiveWords();
 }
