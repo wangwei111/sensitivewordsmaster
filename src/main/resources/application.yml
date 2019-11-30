@@ -1,0 +1,28 @@
+server:
+    port:  8302
+spring:
+    application:
+        name: manage-system
+    profiles:
+        active: dev
+pagehelper:
+    helper-dialect: mysql
+    params: count=countSql
+    reasonable: true
+    row-bounds-with-count: true
+    support-methods-arguments: true
+mybatis:
+  type-aliases-package: com.wwmust.manage.system.dao
+
+login:
+    interceptor:
+          register: true
+## logging config
+logging:
+  level:
+    ROOT: debug
+    org.springfromework.web: INFO
+    com.wwmust: debug
+    org.hibernate: ERROR
+  pattern:
+    console: '%clr(%d{HH:mm:ss}){yellow} [%clr(%thread){red}] %-5level --- %clr(%logger){green} | %msg%n'
