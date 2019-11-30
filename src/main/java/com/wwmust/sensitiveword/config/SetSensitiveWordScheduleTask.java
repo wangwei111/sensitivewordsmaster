@@ -9,25 +9,27 @@
 package com.wwmust.sensitiveword.config;
 
 import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.cache.GuavaCache;
 import com.model.filterWd;
+import com.odianyun.util.sensi.SensitiveFilter;
 import com.wwmust.sensitiveword.mapper.SensitiveWordMapper;
-import org.apache.ibatis.mapping.CacheBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.support.SimpleCacheManager;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
+import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import tk.mybatis.mapper.common.BaseMapper;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * ${DESCRIPTION}
@@ -38,21 +40,40 @@ import java.util.concurrent.TimeUnit;
 @Component
 @Configuration      //1.主要用于标记配置类，兼备Component的效果。
 @EnableScheduling   // 2.开启定时任务
-@CacheConfig
+@Slf4j
 public class SetSensitiveWordScheduleTask {
 
     @Autowired
     private SensitiveWordMapper sensitiveWordMapper;
 
+    @Autowired
+    private  ApplicationContext context;
+
         //3.添加定时任务
         @Scheduled(cron = "0/5 * * * * ?")
-        //或直接指定时间间隔，例如：5秒\
-        private void setSensitiveWords() {
-
-       List<filterWd> filterWds =  sensitiveWordMapper.getSensitiveWords();
-       if(CollectionUtils.isEmpty(filterWds)){
-       }
-       System.out.println(JSON.toJSONString(filterWds));
+        //或直接指定时间间隔，例如：5秒
+         public  SensitiveFilter setSensitiveWords() {
+            SensitiveFilter sensitiveFilter = new SensitiveFilter();
+            log.info("执行了...");
+            sensitiveFilter.clear();
+            List<filterWd> filterWds =  sensitiveWordMapper.getSensitiveWords();
+            filterWds.forEach(wd->{
+                sensitiveFilter.put(wd.getKeywords());
+            });
             System.err.println("执行静态定时任务时间: " + System.currentTimeMillis());
+            return sensitiveFilter;
         }
+
+
+        @Bean
+        public SensitiveFilter sensitiveFilter(){
+            SensitiveFilter sensitiveFilter = new SensitiveFilter();
+            log.info("执行了...");
+            sensitiveFilter.clear();
+            List<filterWd> filterWds =  sensitiveWordMapper.getSensitiveWords();
+            filterWds.forEach(wd->{
+                sensitiveFilter.put(wd.getKeywords());
+            });
+                return sensitiveFilter;
+            }
 }

@@ -23,6 +23,6 @@ logging:
     ROOT: INFO
     org.springfromework.web: INFO
     com.wwmust: debug
-    org.hibernate: ERROR
+    org.hibernate: debug
   pattern:
     console: '%clr(%d{HH:mm:ss}){yellow} [%clr(%thread){red}] %-5level --- %clr(%logger){green} | %msg%n'

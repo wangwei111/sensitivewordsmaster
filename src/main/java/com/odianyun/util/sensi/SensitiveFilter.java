@@ -1,11 +1,17 @@
 package com.odianyun.util.sensi;
 
+import com.model.filterWd;
+import com.wwmust.sensitiveword.mapper.SensitiveWordMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NavigableSet;
 
 /**
@@ -18,17 +24,13 @@ import java.util.NavigableSet;
  * @date 2017年1月5日 下午4:18:38
  */
 public class SensitiveFilter implements Serializable{
+
+	@Autowired
+	private SensitiveWordMapper sensitiveWordMapper;
 	
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 默认的单例，使用自带的敏感词库
-	 */
-	public static final SensitiveFilter DEFAULT = new SensitiveFilter(
-			new BufferedReader(new InputStreamReader(
-					ClassLoader.getSystemResourceAsStream("sensi_words.txt")
-					, StandardCharsets.UTF_8)));
-	
+
 	/**
 	 *
 	 * 为2的n次方，考虑到敏感词大概在10k左右，
@@ -44,16 +46,7 @@ public class SensitiveFilter implements Serializable{
 	 */
 	protected SensitiveNode[] nodes = new SensitiveNode[DEFAULT_INITIAL_CAPACITY];
 	
-	/**
-	 * 构建一个空的filter
-	 * 
-	 * @author ZhangXiaoye
-	 * @date 2017年1月5日 下午4:18:07
-	 */
-	public SensitiveFilter(){
-		
-	}
-	
+
 	/**
 	 * 加载一个文件中的词典，并构建filter<br/>
 	 * 文件中，每行一个敏感词条<br/>
@@ -64,7 +57,7 @@ public class SensitiveFilter implements Serializable{
 	 * @author ZhangXiaoye
 	 * @date 2017年1月5日 下午4:21:06
 	 */
-	public SensitiveFilter(BufferedReader reader){
+/*	public SensitiveFilter(BufferedReader reader){
 		try{
 			for(String line = reader.readLine(); line != null; line = reader.readLine()){
 				put(line);
@@ -73,7 +66,7 @@ public class SensitiveFilter implements Serializable{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	/**
 	 * 增加一个敏感词，如果词的长度（trim后）小于2，则丢弃<br/>
@@ -231,4 +224,7 @@ public class SensitiveFilter implements Serializable{
 		}
 	}
 
+	public void clear() {
+		nodes= new SensitiveNode[DEFAULT_INITIAL_CAPACITY];
+	}
 }

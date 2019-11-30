@@ -8,8 +8,16 @@
  **/
 package com.wwmust.sensitiveword.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
+import com.model.filterWd;
+import com.odianyun.util.sensi.SensitiveFilter;
+import com.wwmust.sensitiveword.config.JsonResult;
+import com.wwmust.sensitiveword.mapper.SensitiveWordMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * ${DESCRIPTION}
@@ -19,6 +27,17 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class FilterWordsConlltor {
+
+
+    @Autowired
+    private SensitiveFilter sensitiveFilter;
+
+    @PostMapping("filter/api/words")
+    public JsonResult getFilter(@RequestBody  WordsParam wordsParam){
+        Assert.isTrue(!StringUtils.isEmpty(wordsParam.getKey()),"key为空!");
+        // 句子中有敏感词
+         return  JsonResult.okJsonResultWithData(sensitiveFilter.filter(wordsParam.getKey(), '*'));
+    }
 
 
 }
