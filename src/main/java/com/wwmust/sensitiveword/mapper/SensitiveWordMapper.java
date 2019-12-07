@@ -28,6 +28,5 @@ public  interface SensitiveWordMapper {
 
 
     @Select("select id ,keywords,type from sensitive_word_library")
-    @Cacheable(value = "sensitive_word_cache")
     List<filterWd> getSensitiveWords();
 }

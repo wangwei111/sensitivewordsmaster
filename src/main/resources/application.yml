@@ -13,7 +13,8 @@ pagehelper:
     support-methods-arguments: true
 mybatis:
   type-aliases-package: com.wwmust.manage.system.dao
-
+  configuration:
+    cache-enabled: true
 login:
     interceptor:
           register: true

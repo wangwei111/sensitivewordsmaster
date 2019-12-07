@@ -3,6 +3,6 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://172.17.0.2:3310/wwmust?setUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://212.64.79.154:3310/wwmust?setUnicode=true&characterEncoding=utf8
     username: root
     password: WANGwei2ming
