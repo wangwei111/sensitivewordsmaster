@@ -31,11 +31,17 @@ public class FilterWordsConlltor {
 
     @Autowired
     private SensitiveFilter sensitiveFilter;
+    @Autowired
+    private SensitiveWordMapper sensitiveWordMapper;
 
     @PostMapping("filter/api/words")
     public JsonResult getFilter(@RequestBody  WordsParam wordsParam){
-        Assert.isTrue(!StringUtils.isEmpty(wordsParam.getKey()),"key为空!");
+         Assert.isTrue(!StringUtils.isEmpty(wordsParam.getKey()),"key为空!");
         // 句子中有敏感词
+        List<filterWd> filterWds =  sensitiveWordMapper.getSensitiveWords();
+        filterWds.forEach(wd->{
+            sensitiveFilter.put(wd.getKeywords());
+        });
          return  JsonResult.okJsonResultWithData(sensitiveFilter.filter(wordsParam.getKey(), '*'));
     }
 
