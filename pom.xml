@@ -25,7 +25,7 @@
 		<mybatis.spring.boot.starter.version>2.0.1</mybatis.spring.boot.starter.version>
 		<druid.version>1.1.18</druid.version>
 		<druid.spring.boot.starter.version>1.1.10</druid.spring.boot.starter.version>
-		<mysql.connector.java.version>6.0.4</mysql.connector.java.version>
+		<mysql.connector.java.version>8.0.16</mysql.connector.java.version>
 		<mapper.spring.boot.starter.version>2.1.5</mapper.spring.boot.starter.version>
 		<hibernate.validator.version>6.0.17.Final</hibernate.validator.version>
 		<pagehelper.version>5.1.7</pagehelper.version>
