@@ -30,7 +30,7 @@
 		<hibernate.validator.version>6.0.17.Final</hibernate.validator.version>
 		<pagehelper.version>5.1.7</pagehelper.version>
 		<cglib.version>3.2.0</cglib.version>
-		<common.io>2.4</common.io>
+		<common.io>2.7</common.io>
 		<httpclient>4.5.2</httpclient>
 		<common.fileupload>1.3.1</common.fileupload>
 		<lombok.version>1.16.20</lombok.version>
